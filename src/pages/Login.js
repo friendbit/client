@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import {
     StyleSheet,
@@ -13,14 +14,31 @@ import Container from '../components/Container';
 import Button from '../components/Button';
 import Label from '../components/Label';
 
+import {loginAttempt} from '../actions'
+
 import fbcolors from '../Constants';
 
 /**onPress={this.press.bind(this)} */
 
-export default class Login extends Component {
+class Login extends Component {
+    // constructor(props){
+    //     super(props);
+    //     this.getErrorMessage = this.getErrorMessage.bind(this);
+    // }
 
-    onSigninPressed(){
+    onSigninPressed() {
         console.log("onSigninPressed Pressed");
+        this.props.dispatchLogin();
+    }
+
+    getErrorMessage(){
+        if(this.props && this.props.user && this.props.user.message){
+            console.log("render message")
+            return <Label text={this.props.user.message} />;
+        }
+        console.log("render null " + JSON.stringify(this.props))
+        
+        return null;
     }
 
     render() {
@@ -34,6 +52,7 @@ export default class Login extends Component {
                 </Container>
                 <Container>
                     <Label text="Username" />
+                    {this.getErrorMessage()}
                     <TextInput
                         style={styles.textInput}
                     />
@@ -64,13 +83,13 @@ export default class Login extends Component {
                             label="Sign In"
                             styles={{ button: styles.primaryButton, label: styles.buttonWhiteText }}
                             onPress={this.onSigninPressed.bind(this)}
-                            />
+                        />
                     </Container>
                     <Container>
                         <Button
                             label="CANCEL"
                             styles={{ label: styles.buttonBlackText }}
-                             />
+                        />
                     </Container>
                 </View>
             </ScrollView>
@@ -126,6 +145,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#34A853'
     },
     footer: {
-       marginTop: 100
+        marginTop: 100
     }
 });
+
+function mapStateToProps(state) {
+    return {
+        user: state.user
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        dispatchLogin: (user, password) => dispatch(loginAttempt(user, password))
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Login)
