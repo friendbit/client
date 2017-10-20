@@ -13,6 +13,8 @@ import Container from '../components/Container';
 import Button from '../components/Button';
 import Label from '../components/Label';
 
+import fbcolors from '../Constants';
+
 /**onPress={this.press.bind(this)} */
 
 export default class Login extends Component {
@@ -78,7 +80,7 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
     scroll: {
-        backgroundColor: '#E1D7D8',
+        backgroundColor: fbcolors.green,
         padding: 30,
         flexDirection: 'column'
     },
