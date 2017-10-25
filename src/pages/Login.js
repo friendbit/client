@@ -16,7 +16,7 @@ import Label from '../components/Label';
 
 import {loginAttempt} from '../actions'
 
-import fbcolors from '../Constants';
+import {fbcolors} from '../Constants';
 
 /**onPress={this.press.bind(this)} */
 
