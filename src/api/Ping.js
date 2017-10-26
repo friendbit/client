@@ -1,8 +1,9 @@
-import {serverConst} from '../Constants';
+import {serverConst, fetchDefaults} from '../Constants';
 
 export function pingRequest() {
-    // console.log("place 0");
-    return fetch(serverConst.baseUrl + `/api/ping`)
+    url = serverConst.baseUrl + `/api/ping`;
+    console.log("fetch " + url);
+    return fetch(url, fetchDefaults)
         .then(response => {
             // console.log("place 1" + response);
             return response.json();
