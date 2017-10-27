@@ -8,7 +8,5 @@ export const serverConst = {
 }
 
 export const fetchDefaults = {
-    strictSSL: false,
-    credentials: "same-origin"
 };
 
