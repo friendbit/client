@@ -15,7 +15,9 @@ import Container from '../components/Container';
 import Button from '../components/Button';
 import Label from '../components/Label';
 
-import { loginAttempt, userIdChanged } from '../actions'
+import { loginFailed, loginSuccess } from '../actions'
+import {login} from '../api/Login';
+
 
 import { fbcolors } from '../Constants';
 
@@ -26,17 +28,37 @@ class Login extends Component {
         super(props);
         this.state = {
             userId: this.props.user.userId,
-            password: ""
+            password: "password"
         };
     }
 
     static propTypes = {
-        user: PropTypes.object.isRequired
+        user: PropTypes.object.isRequired,
+        dispatchLoginFailed: PropTypes.func.isRequired,
+        dispatchLoginSuccess: PropTypes.func.isRequired
     }
 
     onSigninPressed() {
         console.log("onSigninPressed Pressed");
-        this.props.dispatchLogin(this.state.userId, this.state.password);
+
+        login(this.state.userId, this.state.password)
+        .then((loginSuccess) => {
+            if(loginSuccess == true){
+                console.log("login success");
+                this.props.dispatchLoginSuccess(this.state.userId);
+            } else {
+                console.log("login failed: " + loginSuccess);
+                this.props.dispatchLoginFailed(this.state.userId);
+            }
+        })
+        .catch(error => {
+            console.log("login error " + error)
+            //console.log(this.state)
+            this.props.dispatchLoginFailed(this.state.userId)}
+        );
+
+
+        // this.props.dispatchLogin(this.state.userId, this.state.password);
     }
 
     getErrorMessage() {
@@ -171,7 +193,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        dispatchLogin: (user, password) => dispatch(loginAttempt(user, password))
+        dispatchLoginSuccess: (userId)        => dispatch(loginSuccess(userId)),
+        dispatchLoginFailed: (userId)   => dispatch(loginFailed(userId)),
     }
 }
 

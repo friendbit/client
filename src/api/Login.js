@@ -2,6 +2,8 @@ import { serverConst, fetchDefaults } from '../Constants';
 import base64 from 'base-64';
 
 export function login(username, password) {
+    console.log("remote login with user " + username);
+
     url = serverConst.baseUrl + `/login`;
     console.log("fetch " + url);
 
@@ -14,7 +16,7 @@ export function login(username, password) {
             headers: headers,
         })
         .then(response => {
-            // console.log("place 1" + response);
+            console.log("login response status: " + response.status);
             return response.status == 200;
         }
         )

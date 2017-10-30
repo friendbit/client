@@ -1,19 +1,26 @@
 import { combineReducers } from 'redux'
 
-const user = (state = {userId:"storedUserId"}, action) => {
+const user = (state = { userId: "user" }, action) => {
     console.log("action: " + action.type);
     switch (action.type) {
         case 'LOGIN_FAILED':
-            
+
             return {
                 ...state,
-                userId:action.user,
-                message:action.message
+                userId: action.user,
+                message: action.message
+            };
+        case 'LOGIN_SUCCESS':
+
+            return {
+                ...state,
+                userId: action.user,
+                message: null
             };
         case 'USER_ID_CHANGED':
             return {
                 ...state,
-                userId:action.newUserId
+                userId: action.newUserId
             };
 
         default:

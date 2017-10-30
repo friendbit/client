@@ -4,7 +4,7 @@ export const  fbcolors = {
 }
 
 export const serverConst = {
-    baseUrl: 'http://localhost:8080'
+    baseUrl: 'http://172.20.10.3:8080'
 }
 
 export const fetchDefaults = {
