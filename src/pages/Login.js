@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
@@ -14,21 +15,31 @@ import Container from '../components/Container';
 import Button from '../components/Button';
 import Label from '../components/Label';
 
-import {loginAttempt} from '../actions'
+import {loginAttempt, userIdChanged} from '../actions'
 
 import {fbcolors} from '../Constants';
 
 /**onPress={this.press.bind(this)} */
 
 class Login extends Component {
-    // constructor(props){
-    //     super(props);
-    //     this.getErrorMessage = this.getErrorMessage.bind(this);
-    // }
+    constructor(props){
+        super(props);
+        this.state = {password:""};
+    }
+
+    static propTypes = {
+        user: PropTypes.object.isRequired,
+        dispatch: PropTypes.function
+    }
+
+    onUserIdChanged(newUserId) {
+        console.log("onUserIdChanged " + JSON.stringify(newUserId) );
+        this.props.dispatch(userIdChanged(newUserId));
+    }
 
     onSigninPressed() {
         console.log("onSigninPressed Pressed");
-        this.props.dispatchLogin();
+        this.props.dispatchLogin(this.props.user.userId, this.state.password);
     }
 
     getErrorMessage(){
@@ -36,7 +47,7 @@ class Login extends Component {
             console.log("render message")
             return <Label text={this.props.user.message} />;
         }
-        console.log("render null " + JSON.stringify(this.props))
+        console.log("render " + JSON.stringify(this.props))
         
         return null;
     }
@@ -55,6 +66,8 @@ class Login extends Component {
                     {this.getErrorMessage()}
                     <TextInput
                         style={styles.textInput}
+                        value={this.props.user.userId}
+                        onChangeText={(newUserId) => this.onUserIdChanged(newUserId)}
                     />
                 </Container>
                 <Container>
@@ -62,19 +75,9 @@ class Login extends Component {
                     <TextInput
                         secureTextEntry={true}
                         style={styles.textInput}
+                        value={this.state.password}
+                        onChangeText={(password) => this.setState({password})}
                     />
-                </Container>
-                <Container>
-                    <Button
-                        styles={{ button: styles.transparentButton }}
-
-                    >
-                        <View style={styles.inline}>
-                            <Icon name="facebook-official" size={30} color="#3B5699" />
-                            <Text style={[styles.buttonBlueText, styles.buttonBigText]}>  Connect </Text>
-                            <Text style={styles.buttonBlueText}>with Facebook</Text>
-                        </View>
-                    </Button>
                 </Container>
 
                 <View style={styles.footer}>
@@ -92,6 +95,20 @@ class Login extends Component {
                         />
                     </Container>
                 </View>
+
+                <Container>
+                    <Button
+                        styles={{ button: styles.transparentButton }}
+
+                    >
+                        <View style={styles.inline}>
+                            <Icon name="facebook-official" size={30} color="#3B5699" />
+                            <Text style={[styles.buttonBlueText, styles.buttonBigText]}>  Connect </Text>
+                            <Text style={styles.buttonBlueText}>with Facebook</Text>
+                        </View>
+                    </Button>
+                </Container>
+
             </ScrollView>
         );
     }
@@ -145,7 +162,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#34A853'
     },
     footer: {
-        marginTop: 100
+        marginTop: 30
     }
 });
 
@@ -157,7 +174,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        dispatchLogin: (user, password) => dispatch(loginAttempt(user, password))
+        dispatchLogin: (user, password) => dispatch(loginAttempt(user, password)),
+        dispatch:dispatch
     }
 }
 
