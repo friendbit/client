@@ -6,6 +6,8 @@ import { createStore } from 'redux'
 
 import Login from './src/pages/Login';
 import rootReducer from './src/reducers'
+import AppWithNavigationState from './src/core/AppWithNavigationState';
+
 
 export default class App extends React.Component {
   state = {
@@ -15,7 +17,8 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={this.state.store}>
-        <Login />
+        {/* <Login /> */}
+        <AppWithNavigationState></AppWithNavigationState>
       </Provider>
     );
   }

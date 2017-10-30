@@ -24,6 +24,12 @@ import { fbcolors } from '../Constants';
 /**onPress={this.press.bind(this)} */
 
 class Login extends Component {
+    // static navigationOptions = {
+    //     title: 'Login',
+    //     header: {
+    //       visible: false
+    //     }
+    //   }
     constructor(props) {
         super(props);
         this.state = {
@@ -31,6 +37,7 @@ class Login extends Component {
             password: "password"
         };
     }
+
 
     static propTypes = {
         user: PropTypes.object.isRequired,
@@ -46,6 +53,8 @@ class Login extends Component {
             if(loginSuccess == true){
                 console.log("login success");
                 this.props.dispatchLoginSuccess(this.state.userId);
+                console.log("switch screen");
+                this.props.navigation.navigate('MainScreen')
             } else {
                 console.log("login failed: " + loginSuccess);
                 this.props.dispatchLoginFailed(this.state.userId);

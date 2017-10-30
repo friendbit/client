@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import nav from './nav'
 
 const user = (state = { userId: "user" }, action) => {
     console.log("action: " + action.type);
@@ -30,7 +31,7 @@ const user = (state = { userId: "user" }, action) => {
 
 
 const rootReducer = combineReducers({
-    user
+    user, nav
 })
 
 export default rootReducer
