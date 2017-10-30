@@ -8,9 +8,4 @@ export function loginAttempt(user, password) {
   };
 }
 
-export function userIdChanged(newUserId) {
-  return {
-    type: 'USER_ID_CHANGED',
-    newUserId
-  }
-}
+

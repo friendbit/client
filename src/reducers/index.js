@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-const user = (state = {userId:"sampleUserId"}, action) => {
+const user = (state = {userId:"storedUserId"}, action) => {
     console.log("action: " + action.type);
     switch (action.type) {
         case 'LOGIN_FAILED':

@@ -15,40 +15,37 @@ import Container from '../components/Container';
 import Button from '../components/Button';
 import Label from '../components/Label';
 
-import {loginAttempt, userIdChanged} from '../actions'
+import { loginAttempt, userIdChanged } from '../actions'
 
-import {fbcolors} from '../Constants';
+import { fbcolors } from '../Constants';
 
 /**onPress={this.press.bind(this)} */
 
 class Login extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state = {password:""};
+        this.state = {
+            userId: this.props.user.userId,
+            password: ""
+        };
     }
 
     static propTypes = {
-        user: PropTypes.object.isRequired,
-        dispatch: PropTypes.function
-    }
-
-    onUserIdChanged(newUserId) {
-        console.log("onUserIdChanged " + JSON.stringify(newUserId) );
-        this.props.dispatch(userIdChanged(newUserId));
+        user: PropTypes.object.isRequired
     }
 
     onSigninPressed() {
         console.log("onSigninPressed Pressed");
-        this.props.dispatchLogin(this.props.user.userId, this.state.password);
+        this.props.dispatchLogin(this.state.userId, this.state.password);
     }
 
-    getErrorMessage(){
-        if(this.props && this.props.user && this.props.user.message){
+    getErrorMessage() {
+        if (this.props && this.props.user && this.props.user.message) {
             console.log("render message")
             return <Label text={this.props.user.message} />;
         }
         console.log("render " + JSON.stringify(this.props))
-        
+
         return null;
     }
 
@@ -66,9 +63,9 @@ class Login extends Component {
                     {this.getErrorMessage()}
                     <TextInput
                         style={styles.textInput}
-                        value={this.props.user.userId}
-                        onChangeText={(newUserId) => this.onUserIdChanged(newUserId)}
-                    />
+                        value={this.state.userId}
+                        onChangeText={(userId) => this.setState({ userId })}
+                   />
                 </Container>
                 <Container>
                     <Label text="Password" />
@@ -76,7 +73,7 @@ class Login extends Component {
                         secureTextEntry={true}
                         style={styles.textInput}
                         value={this.state.password}
-                        onChangeText={(password) => this.setState({password})}
+                        onChangeText={(password) => this.setState({ password })}
                     />
                 </Container>
 
@@ -174,8 +171,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        dispatchLogin: (user, password) => dispatch(loginAttempt(user, password)),
-        dispatch:dispatch
+        dispatchLogin: (user, password) => dispatch(loginAttempt(user, password))
     }
 }
 
