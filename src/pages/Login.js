@@ -17,7 +17,7 @@ import Label from '../components/Label';
 
 import { loginFailed, loginSuccess } from '../actions'
 import {login} from '../api/Login';
-
+import {logInFb} from '../api/LoginFb'
 
 import { fbcolors } from '../Constants';
 
@@ -43,6 +43,19 @@ class Login extends Component {
         user: PropTypes.object.isRequired,
         dispatchLoginFailed: PropTypes.func.isRequired,
         dispatchLoginSuccess: PropTypes.func.isRequired
+    }
+
+
+    onFacebookSigninPressed() {
+        console.log("onFacebookSigninPressed Pressed");
+
+        (async () => {
+            console.log("calling logInFb");
+            await logInFb();
+            this.props.navigation.navigate('MainScreen')
+        })();
+
+        
     }
 
     onSigninPressed() {
@@ -127,7 +140,7 @@ class Login extends Component {
                 <Container>
                     <Button
                         styles={{ button: styles.transparentButton }}
-
+                        onPress={this.onFacebookSigninPressed.bind(this)}
                     >
                         <View style={styles.inline}>
                             <Icon name="facebook-official" size={30} color="#3B5699" />
