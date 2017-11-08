@@ -15,7 +15,7 @@ import Container from '../components/Container';
 import Button from '../components/Button';
 import Label from '../components/Label';
 
-import { loginFailed, loginSuccess } from '../actions'
+import { loginFailed, loginSuccess, loginFbSuccess } from '../actions'
 import {login} from '../api/Login';
 import {logInFb} from '../api/LoginFb'
 
@@ -42,7 +42,8 @@ class Login extends Component {
     static propTypes = {
         user: PropTypes.object.isRequired,
         dispatchLoginFailed: PropTypes.func.isRequired,
-        dispatchLoginSuccess: PropTypes.func.isRequired
+        dispatchLoginSuccess: PropTypes.func.isRequired,
+        dispatchLoginFbSuccess: PropTypes.func.isRequired
     }
 
 
@@ -51,8 +52,13 @@ class Login extends Component {
 
         (async () => {
             console.log("calling logInFb");
-            await logInFb();
-            this.props.navigation.navigate('MainScreen')
+            try{
+                var token = await logInFb();
+                this.props.dispatchLoginFbSuccess(token);
+                this.props.navigation.navigate('MainScreen')
+            } catch (error) {
+                console.warn("FB Login failed: " + error)
+            }
         })();
 
         
@@ -216,6 +222,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         dispatchLoginSuccess: (userId)        => dispatch(loginSuccess(userId)),
+        dispatchLoginFbSuccess: (userId)        => dispatch(loginFbSuccess(userId)),
         dispatchLoginFailed: (userId)   => dispatch(loginFailed(userId)),
     }
 }

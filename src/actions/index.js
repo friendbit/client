@@ -17,4 +17,12 @@ export function loginSuccess(userId) {
   };
 }
 
+export function loginFbSuccess(token) {
+  console.log("successful Facebook login. Token " + token);
+  return {
+    type: 'LOGIN_FB_SUCCESS',
+    token,
+    message: null
+  };
+}
 

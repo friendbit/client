@@ -18,6 +18,14 @@ const user = (state = { userId: "user" }, action) => {
                 userId: action.user,
                 message: null
             };
+        case 'LOGIN_FB_SUCCESS':
+
+            return {
+                ...state,
+                token: action.token,
+                message: null
+            };
+
         case 'USER_ID_CHANGED':
             return {
                 ...state,
