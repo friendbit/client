@@ -53,8 +53,8 @@ class Login extends Component {
         (async () => {
             console.log("calling logInFb");
             try{
-                var token = await logInFb();
-                this.props.dispatchLoginFbSuccess(token);
+                var loginFbResult = await logInFb();
+                this.props.dispatchLoginFbSuccess(loginFbResult);
                 this.props.navigation.navigate('MainScreen')
             } catch (error) {
                 console.warn("FB Login failed: " + error)

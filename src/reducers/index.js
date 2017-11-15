@@ -22,7 +22,7 @@ const user = (state = { userId: "user" }, action) => {
 
             return {
                 ...state,
-                token: action.token,
+                longinFbResult: action.longinFbResult,
                 message: null
             };
 
