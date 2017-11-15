@@ -32,6 +32,12 @@ const user = (state = { userId: "user" }, action) => {
                 userId: action.newUserId
             };
 
+        case "PHONE_CONTACTS_LOADED":
+            return {
+                ...state,
+                contacts: action.contacts
+            };
+
         default:
             return state;
     }

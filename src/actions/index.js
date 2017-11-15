@@ -26,3 +26,11 @@ export function loginFbSuccess(loginFbResult) {
   };
 }
 
+export function contactsLoaded(contacts){
+  console.log('loaded contacts' );
+  return {
+    type:'PHONE_CONTACTS_LOADED',
+    contacts
+  }
+}
+

@@ -18,7 +18,9 @@ import Label from '../components/Label';
 
 import { loginFailed, loginSuccess, loginFbSuccess } from '../actions'
 import {login} from '../api/Login';
-import {logInFb} from '../api/LoginFb'
+import {logInFb} from '../api/LoginFb';
+import {loadContacts} from '../api/Contacts';
+
 
 import { fbcolors } from '../Constants';
 
@@ -94,7 +96,7 @@ class LoginScreen extends Component {
             console.log("render message")
             return <Label text={this.props.user.message} />;
         }
-        console.log("render " + JSON.stringify(this.props))
+        //console.log("render " + JSON.stringify(this.props))
 
         return null;
     }
@@ -224,7 +226,11 @@ function mapDispatchToProps(dispatch) {
         dispatchLoginSuccess: (userId)        => dispatch(loginSuccess(userId)),
         dispatchLoginFbSuccess: (userId)        => dispatch(loginFbSuccess(userId)),
         dispatchLoginFailed: (userId)   => dispatch(loginFailed(userId)),
-        dispatchNavigateMainScreen: () => dispatch(NavigationActions.navigate({ routeName: 'MainScreen' }))
+        dispatchNavigateMainScreen: () => {
+            console.log("dispatch to main");
+            dispatch(NavigationActions.navigate({ routeName: 'MainScreen' }));
+            loadContacts(dispatch);
+        }
     }
 }
 
