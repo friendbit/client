@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 
 import {
     StyleSheet,
@@ -23,13 +24,10 @@ import { fbcolors } from '../Constants';
 
 /**onPress={this.press.bind(this)} */
 
-class Login extends Component {
-    // static navigationOptions = {
-    //     title: 'Login',
-    //     header: {
-    //       visible: false
-    //     }
-    //   }
+class LoginScreen extends Component {
+    static navigationOptions = {
+        title: 'Login'
+      }
     constructor(props) {
         super(props);
         this.state = {
@@ -43,7 +41,8 @@ class Login extends Component {
         user: PropTypes.object.isRequired,
         dispatchLoginFailed: PropTypes.func.isRequired,
         dispatchLoginSuccess: PropTypes.func.isRequired,
-        dispatchLoginFbSuccess: PropTypes.func.isRequired
+        dispatchLoginFbSuccess: PropTypes.func.isRequired,
+        dispatchNavigateMainScreen: PropTypes.func.isRequired
     }
 
 
@@ -73,7 +72,8 @@ class Login extends Component {
                 console.log("login success");
                 this.props.dispatchLoginSuccess(this.state.userId);
                 console.log("switch screen");
-                this.props.navigation.navigate('MainScreen')
+                // this.props.navigation.navigate('MainScreen');
+                this.props.dispatchNavigateMainScreen();
             } else {
                 console.log("login failed: " + loginSuccess);
                 this.props.dispatchLoginFailed(this.state.userId);
@@ -224,10 +224,11 @@ function mapDispatchToProps(dispatch) {
         dispatchLoginSuccess: (userId)        => dispatch(loginSuccess(userId)),
         dispatchLoginFbSuccess: (userId)        => dispatch(loginFbSuccess(userId)),
         dispatchLoginFailed: (userId)   => dispatch(loginFailed(userId)),
+        dispatchNavigateMainScreen: () => dispatch(NavigationActions.navigate({ routeName: 'MainScreen' }))
     }
 }
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Login)
+)(LoginScreen)

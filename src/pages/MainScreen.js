@@ -3,18 +3,15 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, Image, TextInput, TouchableHighlight } from 'react-native';
 
 class MainScreen extends React.Component {
-//   static navigationOptions = {
-//     title: 'Main',
-//     header: {
-//       visible: false
-//     }
-//   }
+  static navigationOptions = {
+    title: 'Main'
+  }
 
   render() {
     return (
       <View style={styles.container}>
         <Text>
-            This is the Main screen
+          This is the Main screen
         </Text>
       </View>
     );
@@ -30,7 +27,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({global}) => ({
+const mapStateToProps = ({ global }) => ({
   appName: "testApp"
 });
 
